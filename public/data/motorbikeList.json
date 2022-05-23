@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Turbo enduro",
+    "engine": "150",
+    "production_date": "1998",
+    "price": 2000,
+    "availability": false,
+    "pic": "enduro"
+  },
+  {
+    "name": "Cross Super",
+    "engine": "250",
+    "production_date": "2006",
+    "price": 2500,
+    "availability": true,
+    "pic": "cross"
+  },
+  {
+    "name": "Chopper de luxe",
+    "engine": "500",
+    "production_date": "2010",
+    "price": 2800,
+    "availability": true,
+    "pic": "chopper"
+  },
+  {
+    "name": "Racer",
+    "engine": "750",
+    "production_date": "2010",
+    "price": 3000,
+    "availability": false,
+    "pic": "racer"
+  },
+  {
+    "name": "Scooter Afriq",
+    "engine": "50",
+    "production_date": "2017",
+    "price": 1500,
+    "availability": false,
+    "pic": "scooter"
+  },
+  {
+    "name": "Moto Locale",
+    "engine": "125",
+    "production_date": "2014",
+    "price": 1800,
+    "availability": true,
+    "pic": "local"
+  }
+]
