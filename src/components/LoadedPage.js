@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import { Row } from "react-bootstrap";
+import { FormControl, Row } from "react-bootstrap";
 export default function LoadedPage(props) {
   const dataPack = props.data;
   const [labelCnt, setLabelCnt] = useState(0);
@@ -76,12 +76,25 @@ export default function LoadedPage(props) {
       : typeof value === "number"
       ? "number"
       : typeof value === "boolean"
-      ? ""
+      ? "boolean"
       : "text";
   };
 
-  const createAFormControlField = () => {
-    return;
+  const createAFormControlField = (element) => {
+    const typeOfInput = checkInputType(dataPack[0][element]);
+
+    return typeOfInput !== "boolean" ? (
+      <Form.Control
+        className="formField"
+        type={typeOfInput}
+        placeholder={checkPlaceholder(dataPack[currentElement][element])}
+      />
+    ) : (
+      <FormControl as="select" values="to be fixed" className="formField">
+        <option>Yes</option>
+        <option>No</option>
+      </FormControl>
+    );
   };
   const drawFormFields = () => {
     return labelKeys.map((element, index) => (
@@ -91,12 +104,7 @@ export default function LoadedPage(props) {
           <Col md={4}>
             <Form.Group controlId={element}>
               <Form.Label>{displayLabelName(element)}: </Form.Label>
-              <Form.Control
-                type={checkInputType(dataPack[0][element])}
-                placeholder={checkPlaceholder(
-                  dataPack[currentElement][element]
-                )}
-              />
+              {createAFormControlField(element)}
             </Form.Group>
           </Col>
           <Col md={4}></Col>
