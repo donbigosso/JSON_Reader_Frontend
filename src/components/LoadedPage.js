@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import { Row } from "react-bootstrap";
 export default function LoadedPage(props) {
   const dataPack = props.data;
   const [labelCnt, setLabelCnt] = useState(0);
   const [labelVals, setLabelVals] = useState([]);
   const [currentElement, setCurrentElement] = useState(0);
+
   const labelCaptions = {
+    //customize your labels here: key => your own label
     name: "Motorbike name",
     engine: "Motorbike engine",
     production_date: "Production date",
@@ -17,15 +21,30 @@ export default function LoadedPage(props) {
     labels: "here",
   };
 
-  const labelCaptionKeys = Object.keys(labelCaptions);
-  const labelCaptionValues = Object.values(labelCaptions);
+  const fileNames = {
+    //customize your file names here here: file name =>  your own name
+    "motorbikeList.json": "Edit motorbike properties",
+  };
+  const fileNameKeys = Object.keys(fileNames);
 
   // checks if a json label has a proper dectription stored in labelCaptions object
+  const labelCaptionKeys = Object.keys(labelCaptions);
+
   const displayLabelName = (label) => {
     let labelToDisplay = label;
     labelCaptionKeys.forEach((element) => {
       if (element === label) {
         labelToDisplay = labelCaptions[element];
+      }
+    });
+    return labelToDisplay;
+  };
+
+  const displayCustomFileName = (fileName) => {
+    let labelToDisplay = fileName;
+    fileNameKeys.forEach((element) => {
+      if (element === fileName) {
+        labelToDisplay = fileNames[element];
       }
     });
     return labelToDisplay;
@@ -56,18 +75,33 @@ export default function LoadedPage(props) {
       ? "text"
       : typeof value === "number"
       ? "number"
+      : typeof value === "boolean"
+      ? ""
       : "text";
   };
 
+  const createAFormControlField = () => {
+    return;
+  };
   const drawFormFields = () => {
     return labelKeys.map((element, index) => (
-      <Form.Group key={element} controlId={element}>
-        <Form.Label>{displayLabelName(element)}: </Form.Label>
-        <Form.Control
-          type={checkInputType(dataPack[0][element])}
-          placeholder={checkPlaceholder(dataPack[currentElement][element])}
-        />
-      </Form.Group>
+      <div key={element}>
+        <Row>
+          <Col md={4}></Col>
+          <Col md={4}>
+            <Form.Group controlId={element}>
+              <Form.Label>{displayLabelName(element)}: </Form.Label>
+              <Form.Control
+                type={checkInputType(dataPack[0][element])}
+                placeholder={checkPlaceholder(
+                  dataPack[currentElement][element]
+                )}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}></Col>
+        </Row>
+      </div>
     ));
   };
 
@@ -76,6 +110,7 @@ export default function LoadedPage(props) {
   };
   return (
     <div>
+      <h1>{displayCustomFileName(props.fileName)}</h1>
       {drawForm()}
       <br />
       Entry {currentElement + 1}/{dataPack.length}:
