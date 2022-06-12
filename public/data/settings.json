@@ -1,4 +1,9 @@
 {
+  "settings": {
+    "apiPath": "",
+    "jsonFilename": "motorbikeList.json",
+    "jsonPath": "/data/"
+  },
   "labelCaptions": {
     "name": "Motorbike name",
     "engine": "Motorbike engine",
@@ -10,7 +15,7 @@
     "nazwisko": "Nazwisko"
   },
   "fileNames": {
-    "motorbikeList.json": "Edit motorbike properties",
+    "motorbikeList.json": "Motorbikes",
     "zTata.json": "Nazwa zmieniona"
   }
 }

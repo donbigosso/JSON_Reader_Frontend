@@ -6,38 +6,20 @@ export default function LoadedPage(props) {
   const dataPack = props.data;
   const [labelCnt, setLabelCnt] = useState(0);
   const [labelVals, setLabelVals] = useState([]);
-  const [currentElement, setCurrentElement] = useState(1);
+  const [currentElement, setCurrentElement] = useState(0);
 
-  const labelCaptions = () => {
-    if (typeof props.customSettings.labelCaptions !== "object") {
-      return {
-        none: "none",
-      };
-    } else {
-      return props.customSettings.labelCaptions;
-    }
-  };
-
-  const fileNames = () => {
-    if (typeof props.customSettings.fileNames !== "object") {
-      return {
-        none: "none",
-      };
-    } else {
-      return props.customSettings.fileNames;
-    }
-  };
-
-  const fileNameKeys = Object.keys(fileNames());
+  const labelCaptions = props.customSettings.labelCaptions;
+  const fileNames = props.customSettings.fileNames;
+  const fileNameKeys = Object.keys(fileNames);
 
   // checks if a json label has a proper dectription stored in labelCaptions object
-  const labelCaptionKeys = Object.keys(labelCaptions());
+  const labelCaptionKeys = Object.keys(labelCaptions);
 
   const displayLabelName = (label) => {
     let labelToDisplay = label;
     labelCaptionKeys.forEach((element) => {
       if (element === label) {
-        labelToDisplay = labelCaptions()[element];
+        labelToDisplay = labelCaptions[element];
       }
     });
     return labelToDisplay;
@@ -47,7 +29,7 @@ export default function LoadedPage(props) {
     let labelToDisplay = fileName;
     fileNameKeys.forEach((element) => {
       if (element === fileName) {
-        labelToDisplay = fileNames()[element];
+        labelToDisplay = fileNames[element];
       }
     });
     return labelToDisplay;
@@ -124,7 +106,7 @@ export default function LoadedPage(props) {
       <h1>{displayCustomFileName(props.fileName)}</h1>
       {drawForm()}
       <br />
-      Entry {currentElement + 1}/{dataPack.length}:
+      Entry {currentElement + 1}/{dataPack.length}
     </div>
   );
 }
