@@ -6,35 +6,38 @@ export default function LoadedPage(props) {
   const dataPack = props.data;
   const [labelCnt, setLabelCnt] = useState(0);
   const [labelVals, setLabelVals] = useState([]);
-  const [currentElement, setCurrentElement] = useState(0);
+  const [currentElement, setCurrentElement] = useState(1);
 
-  const labelCaptions = {
-    //customize your labels here: key => your own label
-    name: "Motorbike name",
-    engine: "Motorbike engine",
-    production_date: "Production date",
-    price: "Rent price (per day)",
-    availability: "Availability",
-    pic: "Picture",
-    foo: "bar",
-    enter: "your",
-    labels: "here",
+  const labelCaptions = () => {
+    if (typeof props.customSettings.labelCaptions !== "object") {
+      return {
+        none: "none",
+      };
+    } else {
+      return props.customSettings.labelCaptions;
+    }
   };
 
-  const fileNames = {
-    //customize your file names here here: file name =>  your own name
-    "motorbikeList.json": "Edit motorbike properties",
+  const fileNames = () => {
+    if (typeof props.customSettings.fileNames !== "object") {
+      return {
+        none: "none",
+      };
+    } else {
+      return props.customSettings.fileNames;
+    }
   };
-  const fileNameKeys = Object.keys(fileNames);
+
+  const fileNameKeys = Object.keys(fileNames());
 
   // checks if a json label has a proper dectription stored in labelCaptions object
-  const labelCaptionKeys = Object.keys(labelCaptions);
+  const labelCaptionKeys = Object.keys(labelCaptions());
 
   const displayLabelName = (label) => {
     let labelToDisplay = label;
     labelCaptionKeys.forEach((element) => {
       if (element === label) {
-        labelToDisplay = labelCaptions[element];
+        labelToDisplay = labelCaptions()[element];
       }
     });
     return labelToDisplay;
@@ -44,7 +47,7 @@ export default function LoadedPage(props) {
     let labelToDisplay = fileName;
     fileNameKeys.forEach((element) => {
       if (element === fileName) {
-        labelToDisplay = fileNames[element];
+        labelToDisplay = fileNames()[element];
       }
     });
     return labelToDisplay;

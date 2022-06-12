@@ -1,0 +1,16 @@
+{
+  "labelCaptions": {
+    "name": "Motorbike name",
+    "engine": "Motorbike engine",
+    "production_date": "Production date",
+    "price": "Rent price (per day)",
+    "availability": "Availability",
+    "pic": "Picture",
+    "imie": "Imioneczko",
+    "nazwisko": "Nazwisko"
+  },
+  "fileNames": {
+    "motorbikeList.json": "Edit motorbike properties",
+    "zTata.json": "Nazwa zmieniona"
+  }
+}
