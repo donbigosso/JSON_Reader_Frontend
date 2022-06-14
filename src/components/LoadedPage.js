@@ -6,8 +6,8 @@ export default function LoadedPage(props) {
   const dataPack = props.data;
   const [labelCnt, setLabelCnt] = useState(0);
   const [labelVals, setLabelVals] = useState([]);
-  const [currentElement, setCurrentElement] = useState(0);
-
+  const [currentElement, setCurrentElement] = useState(4);
+  const [alertStatus, setAlertStatus] = useState({ elementNotInRange: false });
   const labelCaptions = props.customSettings.labelCaptions;
   const fileNames = props.customSettings.fileNames;
   const fileNameKeys = Object.keys(fileNames);
@@ -101,12 +101,49 @@ export default function LoadedPage(props) {
   const drawForm = () => {
     return <Form>{drawFormFields()}</Form>;
   };
+
+  const alertMessages = {
+    elementNotInRange: "Please enter the correct value",
+  };
+
+  const handleEntrySelector = (event) => {
+    const entryValue = parseInt(event.target.value);
+    if (entryValue >= 1 && entryValue <= dataPack.length) {
+      setAlertStatus({ ...alertStatus, elementNotInRange: false });
+      setCurrentElement(entryValue - 1);
+    } else if (entryValue < 1) {
+      setCurrentElement(0);
+      setAlertStatus({ ...alertStatus, elementNotInRange: true });
+    } else if (entryValue > dataPack.length) {
+      setCurrentElement(dataPack.length - 1);
+      setAlertStatus({ ...alertStatus, elementNotInRange: true });
+    }
+  };
+
   return (
     <div>
       <h1>{displayCustomFileName(props.fileName)}</h1>
       {drawForm()}
       <br />
-      Entry {currentElement + 1}/{dataPack.length}
+      <Row>
+        <Col sm={4}></Col>
+        <Col sm={1}>Entry:</Col>
+        <Col sm={1}>
+          <FormControl
+            className="itemIndex"
+            type="number"
+            placeholder={currentElement + 1}
+            onChange={handleEntrySelector}
+          />
+        </Col>
+        <Col sm={1}>of</Col>
+        <Col sm={1}>{dataPack.length}</Col>
+        <p className="alert">
+          {alertStatus.elementNotInRange
+            ? "Element not in range, please enter a correct value..."
+            : ""}
+        </p>
+      </Row>
     </div>
   );
 }
