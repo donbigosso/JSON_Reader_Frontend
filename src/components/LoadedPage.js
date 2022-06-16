@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import { FormControl, Row } from "react-bootstrap";
+import { Button, FormControl, Row } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
 export default function LoadedPage(props) {
-  const dataPack = props.data;
-  const [labelCnt, setLabelCnt] = useState(0);
+  const { register, handleSubmit } = useForm();
+  const [dataPack, setDataPack] = useState(props.data);
   const [labelVals, setLabelVals] = useState([]);
   const [currentElement, setCurrentElement] = useState(4);
   const [alertStatus, setAlertStatus] = useState({ elementNotInRange: false });
@@ -37,11 +40,10 @@ export default function LoadedPage(props) {
 
   const labelKeys = Object.keys(dataPack[0]);
   const labelCount = labelKeys.length;
-  useEffect(() => {
-    setLabelCnt(labelCount);
-    setLabelVals(labelKeys);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+  const test_function = () => {
+    console.log(register);
+  };
 
   const checkPlaceholder = (element) => {
     if (typeof element === "boolean") {
@@ -64,8 +66,12 @@ export default function LoadedPage(props) {
       ? "boolean"
       : "text";
   };
+  const changeValueOf = (element) => {
+    setDataPack({ ...dataPack, currentElement, name: "test" });
+    console.log(element);
+  };
 
-  const createAFormControlField = (element) => {
+  const createAFormControlField = (element, index) => {
     const typeOfInput = checkInputType(dataPack[0][element]);
 
     return typeOfInput !== "boolean" ? (
@@ -73,11 +79,17 @@ export default function LoadedPage(props) {
         className="formField"
         type={typeOfInput}
         placeholder={checkPlaceholder(dataPack[currentElement][element])}
+        {...register(element)}
       />
     ) : (
-      <FormControl as="select" values="to be fixed" className="formField">
-        <option>Yes</option>
-        <option>No</option>
+      <FormControl
+        as="select"
+        defaultValue={dataPack[currentElement][element] ? "YES" : "NO"}
+        className="formField"
+        {...register(element)}
+      >
+        <option>YES</option>
+        <option>NO</option>
       </FormControl>
     );
   };
@@ -89,7 +101,7 @@ export default function LoadedPage(props) {
           <Col md={4}>
             <Form.Group controlId={element}>
               <Form.Label>{displayLabelName(element)}: </Form.Label>
-              {createAFormControlField(element)}
+              {createAFormControlField(element, index)}
             </Form.Group>
           </Col>
           <Col md={4}></Col>
@@ -99,7 +111,12 @@ export default function LoadedPage(props) {
   };
 
   const drawForm = () => {
-    return <Form>{drawFormFields()}</Form>;
+    return (
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        {drawFormFields()}
+        <Button type="submit">Test</Button>
+      </Form>
+    );
   };
 
   const alertMessages = {
@@ -120,6 +137,25 @@ export default function LoadedPage(props) {
     }
   };
 
+  const onSubmit = (data) => {
+    const url = props.customSettings.settings.apiPath;
+    const changedData = {};
+
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== "") {
+        changedData[key] = value;
+      } else {
+        changedData[key] = dataPack[currentElement][key];
+      }
+    }
+
+    console.log(changedData);
+    const dataForPosting = { index: currentElement, data: changedData };
+    axios
+      .post(url, dataForPosting)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <h1>{displayCustomFileName(props.fileName)}</h1>
@@ -138,12 +174,12 @@ export default function LoadedPage(props) {
         </Col>
         <Col sm={1}>of</Col>
         <Col sm={1}>{dataPack.length}</Col>
-        <p className="alert">
-          {alertStatus.elementNotInRange
-            ? "Element not in range, please enter a correct value..."
-            : ""}
-        </p>
       </Row>
+      <p className="alert">
+        {alertStatus.elementNotInRange
+          ? "Element not in range, please enter a correct value..."
+          : ""}
+      </p>
     </div>
   );
 }

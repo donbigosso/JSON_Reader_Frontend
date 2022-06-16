@@ -1,6 +1,6 @@
 {
   "settings": {
-    "apiPath": "",
+    "apiPath": "http://localhost:80/my/JSON_manager_api/tester.php",
     "jsonFilename": "motorbikeList.json",
     "jsonPath": "/data/"
   },
