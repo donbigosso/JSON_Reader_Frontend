@@ -15,7 +15,7 @@ function App() {
 
   const jsonFolderPath = customSettings.settings.jsonPath;
   const fileName = customSettings.settings.jsonFilename; //name wil be used as a header for Loaded Page
-  const noCache = Math.round(Date.now() / 100000);
+  const noCache = Math.round(Date.now() / 100);
   const url = `${jsonFolderPath + fileName}?noCache=${noCache}`;
   const settingsFile = `${process.env.PUBLIC_URL}/data/settings.json?noCache=${noCache}`;
   const getDataPack = () => {
@@ -46,12 +46,16 @@ function App() {
   useEffect(() => {
     getDataPack();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customSettings]);
+  }, [customSettings]); //custom settings must load first to get data
 
   useEffect(() => {
     getCustomization();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const testFunction = () => {
+    console.log("Test");
+  };
 
   const decideIfContentExists = () => {
     if (

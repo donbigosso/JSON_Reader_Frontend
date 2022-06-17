@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 export default function LoadedPage(props) {
+  //TakNieModal({naglowek, tresc, usuwanie, ...props})
   const { register, handleSubmit } = useForm();
   const [dataPack, setDataPack] = useState(props.data);
   const [labelVals, setLabelVals] = useState([]);
@@ -41,10 +42,6 @@ export default function LoadedPage(props) {
   const labelKeys = Object.keys(dataPack[0]);
   const labelCount = labelKeys.length;
 
-  const test_function = () => {
-    console.log(register);
-  };
-
   const checkPlaceholder = (element) => {
     if (typeof element === "boolean") {
       if (element) {
@@ -65,10 +62,6 @@ export default function LoadedPage(props) {
       : typeof value === "boolean"
       ? "boolean"
       : "text";
-  };
-  const changeValueOf = (element) => {
-    setDataPack({ ...dataPack, currentElement, name: "test" });
-    console.log(element);
   };
 
   const createAFormControlField = (element, index) => {
@@ -140,7 +133,6 @@ export default function LoadedPage(props) {
   const onSubmit = (data) => {
     const url = props.customSettings.settings.apiPath;
     const changedData = {};
-
     for (const [key, value] of Object.entries(data)) {
       if (value !== "") {
         changedData[key] = value;
@@ -149,8 +141,12 @@ export default function LoadedPage(props) {
       }
     }
 
-    console.log(changedData);
-    const dataForPosting = { index: currentElement, data: changedData };
+    const dataForPosting = {
+      task: "none",
+      filename: props.customSettings.settings.jsonFilename,
+      index: currentElement,
+      data: changedData,
+    };
     axios
       .post(url, dataForPosting)
       .then((res) => console.log(res.data))
