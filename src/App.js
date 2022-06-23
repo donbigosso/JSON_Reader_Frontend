@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./components/Loader";
-import LoadedPage from "./components/LoadedPage";
+import EntryEditor from "./components/EntryEditor";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -53,10 +53,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const testFunction = () => {
-    console.log("Test");
-  };
-
   const decideIfContentExists = () => {
     if (
       typeof dataPack[0] !== "object" ||
@@ -65,7 +61,7 @@ function App() {
       return <Loader />;
     } else {
       return (
-        <LoadedPage
+        <EntryEditor
           data={dataPack}
           fileName={fileName}
           customSettings={customSettings}

@@ -5,16 +5,17 @@ import { Button, FormControl, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function LoadedPage(props) {
+export default function EntryEditor(props) {
   //TakNieModal({naglowek, tresc, usuwanie, ...props})
   const { register, handleSubmit } = useForm();
-  const [dataPack, setDataPack] = useState(props.data);
-  const [labelVals, setLabelVals] = useState([]);
-  const [currentElement, setCurrentElement] = useState(4);
+
+  const [editMode, setEditMode] = useState(true);
+  const [currentElement, setCurrentElement] = useState(0);
   const [alertStatus, setAlertStatus] = useState({ elementNotInRange: false });
   const labelCaptions = props.customSettings.labelCaptions;
   const fileNames = props.customSettings.fileNames;
   const fileNameKeys = Object.keys(fileNames);
+  const dataPack = props.data;
 
   // checks if a json label has a proper dectription stored in labelCaptions object
   const labelCaptionKeys = Object.keys(labelCaptions);
@@ -40,7 +41,6 @@ export default function LoadedPage(props) {
   };
 
   const labelKeys = Object.keys(dataPack[0]);
-  const labelCount = labelKeys.length;
 
   const checkPlaceholder = (element) => {
     if (typeof element === "boolean") {
@@ -71,6 +71,7 @@ export default function LoadedPage(props) {
       <Form.Control
         className="formField"
         type={typeOfInput}
+        readOnly={!editMode}
         placeholder={checkPlaceholder(dataPack[currentElement][element])}
         {...register(element)}
       />
@@ -80,6 +81,7 @@ export default function LoadedPage(props) {
         defaultValue={dataPack[currentElement][element] ? "YES" : "NO"}
         className="formField"
         {...register(element)}
+        disabled={!editMode}
       >
         <option>YES</option>
         <option>NO</option>
@@ -107,13 +109,16 @@ export default function LoadedPage(props) {
     return (
       <Form onSubmit={handleSubmit(onSubmit)}>
         {drawFormFields()}
-        <Button type="submit">Test</Button>
+        <Button type="submit">Test</Button>{" "}
+        <Button
+          onClick={() => {
+            setEditMode(!editMode);
+          }}
+        >
+          {editMode ? "Cancel" : "Edit"}
+        </Button>
       </Form>
     );
-  };
-
-  const alertMessages = {
-    elementNotInRange: "Please enter the correct value",
   };
 
   const handleEntrySelector = (event) => {
@@ -122,8 +127,8 @@ export default function LoadedPage(props) {
       setAlertStatus({ ...alertStatus, elementNotInRange: false });
       setCurrentElement(entryValue - 1);
     } else if (entryValue < 1) {
-      setCurrentElement(0);
       setAlertStatus({ ...alertStatus, elementNotInRange: true });
+      setCurrentElement(0);
     } else if (entryValue > dataPack.length) {
       setCurrentElement(dataPack.length - 1);
       setAlertStatus({ ...alertStatus, elementNotInRange: true });
@@ -166,6 +171,7 @@ export default function LoadedPage(props) {
             type="number"
             placeholder={currentElement + 1}
             onChange={handleEntrySelector}
+            readOnly={editMode}
           />
         </Col>
         <Col sm={1}>of</Col>
