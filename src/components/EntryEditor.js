@@ -9,7 +9,7 @@ export default function EntryEditor(props) {
   //TakNieModal({naglowek, tresc, usuwanie, ...props})
   const { register, handleSubmit } = useForm();
 
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const [currentElement, setCurrentElement] = useState(0);
   const [alertStatus, setAlertStatus] = useState({ elementNotInRange: false });
   const labelCaptions = props.customSettings.labelCaptions;
@@ -135,7 +135,20 @@ export default function EntryEditor(props) {
     }
   };
 
+  const handleEntrySelect = (event) => {
+    setCurrentElement(event.target.value);
+  };
+
+  const giveOptions = () => {
+    return dataPack.map((value, key) => (
+      <li key={key}>
+        <br />
+        Key: {key + 1}
+      </li>
+    ));
+  };
   const onSubmit = (data) => {
+    console.log({ ...register("name") });
     const url = props.customSettings.settings.apiPath;
     const changedData = {};
     for (const [key, value] of Object.entries(data)) {
@@ -166,16 +179,19 @@ export default function EntryEditor(props) {
         <Col sm={4}></Col>
         <Col sm={1}>Entry:</Col>
         <Col sm={1}>
-          <FormControl
-            className="itemIndex"
-            type="number"
-            placeholder={currentElement + 1}
-            onChange={handleEntrySelector}
-            readOnly={editMode}
-          />
+          <Form.Control
+            as="select"
+            value={currentElement}
+            disabled={editMode}
+            onChange={handleEntrySelect}
+          >
+            {dataPack.map((value, key) => (
+              <option key={key}>{key}</option>
+            ))}
+          </Form.Control>
         </Col>
         <Col sm={1}>of</Col>
-        <Col sm={1}>{dataPack.length}</Col>
+        <Col sm={1}>{dataPack.length - 1}</Col>
       </Row>
       <p className="alert">
         {alertStatus.elementNotInRange
