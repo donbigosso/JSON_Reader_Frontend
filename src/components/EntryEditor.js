@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import { Button, FormControl, Row } from "react-bootstrap";
@@ -19,6 +19,12 @@ export default function EntryEditor(props) {
 
   // checks if a json label has a proper dectription stored in labelCaptions object
   const labelCaptionKeys = Object.keys(labelCaptions);
+  const exampleRef = useRef(null);
+  const exampleFunction = () => {
+    // exampleRef.current.children[3].style.color = "red";
+    exampleRef.current.children[2].children[0].children[0].children[1].children[0].children[1].value =
+      "";
+  };
 
   const displayLabelName = (label) => {
     let labelToDisplay = label;
@@ -171,7 +177,8 @@ export default function EntryEditor(props) {
       .catch((err) => console.log(err));
   };
   return (
-    <div>
+    <div ref={exampleRef}>
+      <h2>Test Ref</h2>
       <h1>{displayCustomFileName(props.fileName)}</h1>
       {drawForm()}
       <br />
@@ -198,6 +205,9 @@ export default function EntryEditor(props) {
           ? "Element not in range, please enter a correct value..."
           : ""}
       </p>
+      <Row>
+        <Button onClick={exampleFunction}>Test 2</Button>
+      </Row>
     </div>
   );
 }
