@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./components/Loader";
-import EntryEditor from "./components/EntryEditor";
+import EntryEditorNew from "./components/EntryEditorNew";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -61,7 +61,7 @@ function App() {
       return <Loader />;
     } else {
       return (
-        <EntryEditor
+        <EntryEditorNew
           data={dataPack}
           fileName={fileName}
           customSettings={customSettings}
