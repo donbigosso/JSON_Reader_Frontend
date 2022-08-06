@@ -1,4 +1,5 @@
 import React from "react";
+import Timer from "./Timer";
 export default function ParentFunctionTester({
   parentFunction,
 
@@ -12,13 +13,16 @@ export default function ParentFunctionTester({
     border: "2px solid red",
     lineHeight: "45px",
   };
+  const loadedData = props.loadedData;
   return (
     <div style={myStyle}>
-      {props.string}
+      {loadedData[0].name}
       <br />
       <button className="myButton" onClick={parentFunction}>
         Reload data
       </button>
+      <Timer key={1} maxRange={60} />
+      <Timer key={2} maxRange={300} />
     </div>
   );
 }
