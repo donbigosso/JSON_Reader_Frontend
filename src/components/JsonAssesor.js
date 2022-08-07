@@ -6,8 +6,8 @@ export default function JsonAssesor({
 
   ...props
 }) {
-  const [dataPack, setDataPack] = useState(props.loadedData);
-  const [errors, setErrors] = useState("Blah blah");
+  const [dataPack, setDataPack] = useState(props.loadedData[0]);
+  const [errors, setErrors] = useState([]);
 
   const myStyle = {
     width: "300px",
@@ -19,25 +19,40 @@ export default function JsonAssesor({
   };
 
   const verifyIfObject = (object) => {
-    try {
-      if (typeof object === "object") {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      console.log(e);
+    if (typeof object === "object") {
+      return true;
+    } else {
+      return false;
     }
   };
+
   const checkObjectDepth = (object) => {
     let depth = 0;
     if (verifyIfObject(object)) {
       depth = 1;
       if (verifyIfObject(object[0])) {
         depth = 2;
+        const level2keys = Object.keys(object[0]);
       }
     }
     return depth;
+  };
+
+  const getObject = (value, key, array) => {
+    if (verifyIfObject(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const checkIfObjectsByKeys = (object) => {
+    const keys = Object.keys(object);
+    const keyLength = keys.length;
+
+    for (let i = 0; i < keyLength; i++) {
+      const keyValue = keys[i];
+      console.log(verifyIfObject(object[keyValue]));
+    }
   };
 
   const displayModuleDependingonDepth = (depth) => {
@@ -49,9 +64,15 @@ export default function JsonAssesor({
           return <Depth2Main loadedData={dataPack} />;
       }
     } else {
-      return "Error handling to be added";
+      let tempErrors = [...errors];
+      const errMsg = "Either not an object or depth not suppported";
+      tempErrors.push(errMsg);
+      //setErrors(tempErrors);
+      console.log(tempErrors);
+      return "Either not an object or depth not suppported";
     }
   };
+  checkIfObjectsByKeys(dataPack);
   return (
     <div style={myStyle}>
       {displayModuleDependingonDepth(checkObjectDepth(dataPack))}

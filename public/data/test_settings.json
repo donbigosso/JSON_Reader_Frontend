@@ -1,8 +1,8 @@
 {
   "settings": {
     "apiPath": "http://localhost:80/my/JSON_manager_api/Api.php",
-    "jsonFilename": "motorbikeList.json",
-    "jsonPath": "/data/"
+    "jsonFilename": "wpisy.json",
+    "jsonPath": "http://localhost:80/my/JSON_manager_api/"
   },
   "labelCaptions": {
     "name": "Other name",
