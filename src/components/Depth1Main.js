@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Col, Container } from "react-bootstrap";
-import { displayLabelName } from "../functions";
+import FormControlField from "./FormControlField";
+import {
+  displayLabelName,
+  checkPlaceholder,
+  checkInputType,
+} from "../functions";
 
 export default function Depth1Main(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
@@ -12,6 +17,7 @@ export default function Depth1Main(props) {
     <div>
       <Container>
         <h2>{displayLabelName("conscious_pl_PL.json", fileNames)}</h2>
+        <FormControlField value={true} editMode={true} />
       </Container>
     </div>
   );

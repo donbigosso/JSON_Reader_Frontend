@@ -1,4 +1,3 @@
-import ArrayElementsParser from "./components/ArrayElementsParser";
 export function verifyIfObject(object) {
   if (typeof object === "object") {
     return true;
@@ -66,4 +65,26 @@ export const displayLabelName = (label, labelCaptions) => {
     }
   });
   return labelToDisplay;
+};
+
+export const checkPlaceholder = (element) => {
+  if (typeof element === "boolean") {
+    if (element) {
+      return "true";
+    } else {
+      return "false";
+    }
+  } else {
+    return element;
+  }
+};
+
+export const checkInputType = (value) => {
+  return typeof value === "string"
+    ? "text"
+    : typeof value === "number"
+    ? "number"
+    : typeof value === "boolean"
+    ? "boolean"
+    : "text";
 };
