@@ -15,8 +15,8 @@ export default function TaskSelector(props) {
     },
   });
   const noCache = Math.round(Date.now() / 100);
-  const settingsFile = `${process.env.PUBLIC_URL}/data/test_settings.json?noCache=${noCache}`;
-  //const settingsFile = `http://localhost/my/JSON_manager_api/test_settings.json?noCache=${noCache}`;
+  //const settingsFile = `${process.env.PUBLIC_URL}/data/test_settings.json?noCache=${noCache}`;
+  const settingsFile = `http://localhost/my/JSON_manager_api/test_settings.json?noCache=${noCache}`;
 
   const getCustomization = () => {
     axios
@@ -70,6 +70,7 @@ export default function TaskSelector(props) {
         case 1:
           return (
             <JsonAssesor
+              settings={customSettings}
               loadedData={dataPack}
               parentFunction={() => {
                 getDataPack();

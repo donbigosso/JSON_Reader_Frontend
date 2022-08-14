@@ -36,7 +36,7 @@ export default function JsonAssesor({
     if (depth) {
       switch (depth) {
         case 1:
-          return <Depth1Main loadedData={dataPack} />;
+          return <Depth1Main loadedData={dataPack} settings={props.settings} />;
         case 2:
           return <Depth2Main loadedData={dataPack} />;
       }
@@ -50,9 +50,5 @@ export default function JsonAssesor({
     }
   };
 
-  return (
-    <div style={myStyle}>
-      {displayModuleDependingonDepth(checkObjectDepth(dataPack))}
-    </div>
-  );
+  return <div>{displayModuleDependingonDepth(checkObjectDepth(dataPack))}</div>;
 }

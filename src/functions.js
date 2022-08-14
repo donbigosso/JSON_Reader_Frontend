@@ -56,3 +56,14 @@ export const drawListItemsAccordingToDepth = (objectArray) => {
   const newArray = objectArray.map(drawList);
   return newArray;
 };
+
+export const displayLabelName = (label, labelCaptions) => {
+  let labelCaptionKeys = Object.keys(labelCaptions);
+  let labelToDisplay = label;
+  labelCaptionKeys.forEach((element) => {
+    if (element === label) {
+      labelToDisplay = labelCaptions[element];
+    }
+  });
+  return labelToDisplay;
+};
