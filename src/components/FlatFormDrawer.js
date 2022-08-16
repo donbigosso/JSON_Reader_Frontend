@@ -7,10 +7,10 @@ import {
   checkInputType,
 } from "../functions";
 
-export default function Depth1Main(props) {
+export default function FlatFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
   const [editMode, setEditMode] = useState(false);
-  const [childData, setChildData] = useState([]);
+  const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
 
@@ -18,25 +18,28 @@ export default function Depth1Main(props) {
     const tempChildData = { ...childData };
     tempChildData[key] = data;
     setChildData(tempChildData);
-    console.log(childData);
+  };
+
+  const formKeys = Object.keys(dataPack);
+  console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
+  const drawFormFields = () => {
+    return formKeys.map((element, index) => (
+      <FormControlField
+        key={index}
+        formInputID={element}
+        value={dataPack[element]}
+        editMode={true}
+        testFunction={updateChildDataArray}
+      />
+    ));
   };
 
   return (
     <div>
       <Container>
         <h2>{displayLabelName("conscious_pl_PL.json", fileNames)}</h2>
-        <FormControlField
-          formInputID="test"
-          value="Bigos"
-          editMode={true}
-          testFunction={updateChildDataArray}
-        />
-        <FormControlField
-          formInputID="test2"
-          value="Marysia"
-          editMode={true}
-          testFunction={updateChildDataArray}
-        />
+
+        {drawFormFields()}
       </Container>
     </div>
   );

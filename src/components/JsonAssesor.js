@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Depth1Main from "./Depth1Main";
+import FlatFormDrawer from "./FlatFormDrawer";
 import Depth2Main from "./Depth2Main";
 import {
   verifyIfObject,
@@ -14,6 +15,7 @@ export default function JsonAssesor({
 }) {
   const [dataPack, setDataPack] = useState(props.loadedData);
   const [errors, setErrors] = useState([]);
+  const [childData, setChildData] = useState([]);
 
   const myStyle = {
     width: "300px",
@@ -24,19 +26,13 @@ export default function JsonAssesor({
     lineHeight: "22px",
   };
 
-  const getObject = (value, key, array) => {
-    if (verifyIfObject(value)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const displayModuleDependingonDepth = (depth) => {
     if (depth) {
       switch (depth) {
         case 1:
-          return <Depth1Main loadedData={dataPack} settings={props.settings} />;
+          return (
+            <FlatFormDrawer loadedData={dataPack} settings={props.settings} />
+          );
         case 2:
           return <Depth2Main loadedData={dataPack} />;
       }
