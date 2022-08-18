@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
+import FormLabelField from "./FormLabelField";
 import {
   displayLabelName,
   checkPlaceholder,
@@ -38,7 +39,7 @@ export default function FlatFormDrawer(props) {
     <div>
       <Container>
         <h2>{displayLabelName("conscious_pl_PL.json", fileNames)}</h2>
-
+        <FormLabelField value="home_header" labelCaptions={labelCaptions} />
         {drawFormFields()}
       </Container>
     </div>

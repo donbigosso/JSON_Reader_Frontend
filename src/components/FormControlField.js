@@ -18,7 +18,28 @@ export default function FormControlField({ testFunction, ...props }) {
     testFunction(formValue, props.formInputID);
   }, [formValue]);
 
-  return typeOfInput !== "boolean" ? (
+  const drawTextArea = (value) => {
+    const len = value.length;
+    return len < 80 ? (
+      <Form.Control
+        className="formField"
+        type="text"
+        readOnly={!editMode}
+        value={checkPlaceholder(formValue)}
+        onChange={handleChange}
+      />
+    ) : (
+      <Form.Control
+        className="formField"
+        as="textarea"
+        readOnly={!editMode}
+        value={checkPlaceholder(formValue)}
+        onChange={handleChange}
+      />
+    );
+  };
+
+  return typeOfInput !== "boolean" && typeOfInput !== "text" ? (
     <Form.Control
       className="formField"
       type={typeOfInput}
@@ -26,6 +47,8 @@ export default function FormControlField({ testFunction, ...props }) {
       value={checkPlaceholder(formValue)}
       onChange={handleChange}
     />
+  ) : typeOfInput === "text" ? (
+    drawTextArea(formValue)
   ) : (
     <FormControl
       as="select"
