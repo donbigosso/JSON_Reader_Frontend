@@ -2,16 +2,31 @@ import React from "react";
 
 export default function RegExpTester(props) {
   const source = props.children;
-  const boldPattern = /<b>/;
+  const boldPatternBeg = /<b>/g;
+
+  let splitArr = [];
+  let newArr = [];
 
   const hasBold = (string) => {
-    let result = boldPattern.test(string);
+    let result = boldPatternBeg.test(string);
+
     if (result) {
-      let boldBeg = string.indexOf("<b>");
-      let boldEnd = string.indexOf("</b>");
-      let slicedText = string.slice(boldBeg + 3, boldEnd);
+      splitArr = string.split(boldPatternBeg);
+      splitArr.forEach((element, index) => {
+        const boldPatternEnd = /<\/b>/g;
+        let hasEnding = boldPatternEnd.test(element);
+
+        let boldEndPos = element.indexOf("</b>");
+
+        newArr[index] = `${element}:${boldEndPos}:${hasEnding}`;
+      });
+      //let boldBeg = string.indexOf("<b>");
+      //let boldEnd = string.indexOf("</b>");
+      //let slicedText = string.slice(boldBeg + 3, boldEnd);
       //return `Bold begins at ${boldBeg} and ends at ${boldEnd}.`;
-      return slicedText;
+      //return slicedText;
+      console.log(newArr);
+      return newArr;
     } else {
       return "no bold";
     }
