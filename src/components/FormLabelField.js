@@ -7,7 +7,9 @@ export default function FormLabelField(props) {
   const labelCaptions = props.labelCaptions;
   return (
     <>
-      <Form.Label>{displayLabelName(props.value, labelCaptions)}</Form.Label>
+      <Form.Label className="formLabel">
+        {displayLabelName(props.value, labelCaptions)}
+      </Form.Label>
     </>
   );
 }

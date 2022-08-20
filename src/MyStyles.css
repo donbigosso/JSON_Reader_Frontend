@@ -16,3 +16,22 @@
   background-color: #ffffff;
   color: #4caf50;
 }
+.formBackground {
+  background-color: #667062;
+  padding: 1em;
+}
+
+.formContainer {
+  background-color: #a8b3a4;
+  padding-bottom: 1em;
+  border-radius: 5px;
+}
+
+.formHeader {
+  line-height: 2.5em;
+}
+
+.formLabel {
+  font-weight: bold;
+  line-height: 2em;
+}
