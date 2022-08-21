@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
-import RegExpTester from "./RegExpTester";
-import {
-  displayLabelName,
-  checkPlaceholder,
-  checkInputType,
-} from "../functions";
+
+import { displayLabelName } from "../functions";
 
 export default function FlatFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
@@ -31,7 +27,7 @@ export default function FlatFormDrawer(props) {
         <FormControlField
           formInputID={element}
           value={dataPack[element]}
-          editMode={true}
+          editMode={editMode}
           testFunction={updateChildDataArray}
         />
       </div>
@@ -47,7 +43,6 @@ export default function FlatFormDrawer(props) {
 
         {drawFormFields()}
       </Container>
-      <RegExpTester>{dataPack.home_par_01}</RegExpTester>
     </div>
   );
 }

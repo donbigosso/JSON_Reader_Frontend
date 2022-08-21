@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Depth1Main from "./Depth1Main";
+
 import FlatFormDrawer from "./FlatFormDrawer";
 import Depth2Main from "./Depth2Main";
+import TwoLevelFormDrawer from "./TwoLevelFormDrawer";
 import {
   verifyIfObject,
   checkIfObjectsByKeys,
@@ -34,7 +35,12 @@ export default function JsonAssesor({
             <FlatFormDrawer loadedData={dataPack} settings={props.settings} />
           );
         case 2:
-          return <Depth2Main loadedData={dataPack} />;
+          return (
+            <TwoLevelFormDrawer
+              loadedData={dataPack}
+              settings={props.settings}
+            />
+          );
       }
     } else {
       let tempErrors = [...errors];
