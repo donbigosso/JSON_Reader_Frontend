@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
@@ -11,8 +11,11 @@ export default function TwoLevelFormDrawer(props) {
   const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
-  const [selectedEntry, setSelectedEntry] = useState(3);
+  const [selectedEntry, setSelectedEntry] = useState(1);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMsg] = useState("");
 
+  const entryAmount = dataPack.length;
   const updateChildDataArray = (data, key) => {
     const tempChildData = { ...childData };
     tempChildData[key] = data;
@@ -35,30 +38,28 @@ export default function TwoLevelFormDrawer(props) {
     ));
   };
 
-  const newFieldDrawer = (entry) => {
-    const newFormKeys = Object.keys(dataPack[entry]);
-    return newFormKeys.map((element, index) => (
-      <div key={index}>
-        <FormLabelField value={element} labelCaptions={labelCaptions} />
-        <FormControlField
-          formInputID={element}
-          value={secLevData[element]}
-          editMode={editMode}
-          testFunction={updateChildDataArray}
-        />
-      </div>
-    ));
-  };
-
   const handleEntrySelection = (event) => {
-    setSelectedEntry(event.target.value);
-    //  console.log(secLevData);
+    const typedValueIsNumber = Number(event.target.value);
+    if (typedValueIsNumber) {
+      if (typedValueIsNumber > 0 && typedValueIsNumber <= entryAmount) {
+        setSelectedEntry(typedValueIsNumber - 1);
+      }
+    }
   };
 
-  useEffect(() => {
-    console.log(selectedEntry);
-    newFieldDrawer(selectedEntry);
-  }, [selectedEntry]);
+  const increaseCounter = () => {
+    if (selectedEntry < entryAmount - 1) {
+      const newCounter = selectedEntry + 1;
+      setSelectedEntry(newCounter);
+    }
+  };
+
+  const decreaseCounter = () => {
+    if (selectedEntry > 0) {
+      const newCounter = selectedEntry - 1;
+      setSelectedEntry(newCounter);
+    }
+  };
 
   return (
     <div className="formBackground">
@@ -67,28 +68,36 @@ export default function TwoLevelFormDrawer(props) {
           {displayLabelName(props.settings.settings.jsonFilename, fileNames)}
         </h2>
         {
-          //drawFormFields()
-
-          newFieldDrawer(selectedEntry)
+          drawFormFields()
+          // newFieldDrawer(selectedEntry)
         }
+
         <Row className="bottomFormRow">
           <Col xs={1}></Col>
           <Col xs={2}>
-            <Button>Previous</Button>
+            <Button onClick={decreaseCounter}>Previous</Button>
           </Col>
           <Col xs={2}>Entry</Col>
           <Col xs={2}>
             <Form.Control
-              type="number"
-              value={selectedEntry}
+              type="text"
+              value={selectedEntry + 1}
               onChange={handleEntrySelection}
             />
           </Col>
-          <Col xs={2}>of X </Col>
+          <Col xs={2}>of {entryAmount}</Col>
           <Col xs={2}>
-            <Button>Next</Button>
+            <Button onClick={increaseCounter}>Next</Button>
           </Col>
           <Col xs={1}></Col>
+        </Row>
+        <Row>
+          <Col xs={4}></Col>
+
+          <Col xs={4}>
+            <span className="errorSpan">{errorMessage}</span>
+          </Col>
+          <Col xs={4}></Col>
         </Row>
       </Container>
     </div>

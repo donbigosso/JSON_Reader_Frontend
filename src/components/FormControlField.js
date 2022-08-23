@@ -18,6 +18,10 @@ export default function FormControlField({ testFunction, ...props }) {
     testFunction(formValue, props.formInputID);
   }, [formValue]);
 
+  useEffect(() => {
+    setFormValue(props.value);
+  }, [props.value]);
+
   const drawTextArea = (value) => {
     const len = value.length;
     return len < 80 ? (

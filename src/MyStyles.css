@@ -19,6 +19,7 @@
 .formBackground {
   background-color: #667062;
   padding: 1em;
+  min-height: 100%;
 }
 
 .formContainer {
@@ -37,4 +38,8 @@
 }
 .bottomFormRow {
   padding-top: 10px;
+}
+
+.errorSpan {
+  color: rgb(87, 16, 16);
 }
