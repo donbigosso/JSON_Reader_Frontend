@@ -3,7 +3,7 @@ import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 
-import { displayLabelName } from "../functions";
+import { displayLabelName, writeDataToFile } from "../functions";
 
 export default function TwoLevelFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
@@ -18,12 +18,12 @@ export default function TwoLevelFormDrawer(props) {
   const entryAmount = dataPack.length;
   const updateChildDataArray = (data, key) => {
     const tempChildData = { ...childData };
-    tempChildData[key] = data;
+    tempChildData[selectedEntry][key] = data;
     setChildData(tempChildData);
   };
   let secLevData = dataPack[selectedEntry];
   const formKeys = Object.keys(secLevData);
-  //console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
+  // console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
   const drawFormFields = () => {
     return formKeys.map((element, index) => (
       <div key={index}>
@@ -32,7 +32,7 @@ export default function TwoLevelFormDrawer(props) {
           formInputID={element}
           value={secLevData[element]}
           editMode={editMode}
-          testFunction={updateChildDataArray}
+          sendDataToParent={updateChildDataArray}
         />
       </div>
     ));
@@ -96,6 +96,25 @@ export default function TwoLevelFormDrawer(props) {
 
           <Col xs={4}>
             <span className="errorSpan">{errorMessage}</span>
+          </Col>
+          <Col xs={4}></Col>
+        </Row>
+        <Row>
+          <Col xs={4}></Col>
+
+          <Col xs={4}>
+            <Button
+              onClick={() => {
+                setDataPack(childData);
+                writeDataToFile(
+                  childData,
+                  props.settings.settings.apiPath,
+                  props.settings.settings.jsonFilename
+                );
+              }}
+            >
+              Send Data
+            </Button>
           </Col>
           <Col xs={4}></Col>
         </Row>

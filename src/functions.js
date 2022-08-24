@@ -1,3 +1,4 @@
+import axios from "axios";
 export function verifyIfObject(object) {
   if (typeof object === "object") {
     return true;
@@ -87,4 +88,16 @@ export const checkInputType = (value) => {
     : typeof value === "boolean"
     ? "boolean"
     : "text";
+};
+
+export const writeDataToFile = (data, apiUrl, filename) => {
+  const dataForPosting = {
+    task: "write_to_file",
+    filename: filename,
+    data: data,
+  };
+  axios
+    .post(apiUrl, dataForPosting)
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log(err));
 };

@@ -3,7 +3,7 @@ import { Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 
-import { displayLabelName } from "../functions";
+import { displayLabelName, writeDataToFile } from "../functions";
 
 export default function FlatFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
@@ -28,7 +28,7 @@ export default function FlatFormDrawer(props) {
           formInputID={element}
           value={dataPack[element]}
           editMode={editMode}
-          testFunction={updateChildDataArray}
+          sendDataToParent={updateChildDataArray}
         />
       </div>
     ));
