@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
+import MyModal from "./MyModal";
 
 import {
   displayLabelName,
@@ -20,6 +21,17 @@ export default function TwoLevelFormDrawer(props) {
   const [selectedEntry, setSelectedEntry] = useState(5);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMsg] = useState("");
+
+  const [modalData, setModalData] = useState({
+    show: true,
+    buttons: 2,
+    header: "Test header",
+    content: "Test body",
+    btnOne: "Continue",
+    btnTwo: "Cancel",
+    modalAction1: () => setModalData({ ...modalData, show: false }),
+    modalAction2: () => setModalData({ ...modalData, show: false }),
+  });
 
   const entryAmount = dataPack.length;
   const updateChildDataArray = (data, key) => {
@@ -72,7 +84,7 @@ export default function TwoLevelFormDrawer(props) {
 
   useEffect(() => {
     const entryCookie = getCookie("selectedEntry");
-    if (entryCookie != "") {
+    if (entryCookie !== "") {
       setSelectedEntry(Number(entryCookie));
     }
   }, []);
@@ -150,6 +162,17 @@ export default function TwoLevelFormDrawer(props) {
           <Col xs={4}></Col>
         </Row>
       </Container>
+      <MyModal
+        header={modalData.header}
+        content={modalData.content}
+        buttnos={modalData.buttons}
+        sucButText={modalData.btnOne}
+        danButText={modalData.btnTwo}
+        show={modalData.show}
+        onHide={() => setModalData({ ...modalData, show: false })}
+        modalAction1={modalData.modalAction1}
+        modalAction2={modalData.modalAction2}
+      />
     </div>
   );
 }
