@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 
-import { displayLabelName, writeDataToFile } from "../functions";
+import {
+  displayLabelName,
+  writeDataToFile,
+  butVisib,
+  setCookie,
+  getCookie,
+} from "../functions";
 
 export default function TwoLevelFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
-  const [selectedEntry, setSelectedEntry] = useState(1);
+  const [selectedEntry, setSelectedEntry] = useState(5);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMsg] = useState("");
 
@@ -43,6 +49,7 @@ export default function TwoLevelFormDrawer(props) {
     if (typedValueIsNumber) {
       if (typedValueIsNumber > 0 && typedValueIsNumber <= entryAmount) {
         setSelectedEntry(typedValueIsNumber - 1);
+        setCookie("selectedEntry", typedValueIsNumber - 1, 14);
       }
     }
   };
@@ -51,6 +58,7 @@ export default function TwoLevelFormDrawer(props) {
     if (selectedEntry < entryAmount - 1) {
       const newCounter = selectedEntry + 1;
       setSelectedEntry(newCounter);
+      setCookie("selectedEntry", newCounter, 14);
     }
   };
 
@@ -58,9 +66,16 @@ export default function TwoLevelFormDrawer(props) {
     if (selectedEntry > 0) {
       const newCounter = selectedEntry - 1;
       setSelectedEntry(newCounter);
+      setCookie("selectedEntry", newCounter, 14);
     }
   };
 
+  useEffect(() => {
+    const entryCookie = getCookie("selectedEntry");
+    if (entryCookie != "") {
+      setSelectedEntry(Number(entryCookie));
+    }
+  }, []);
   return (
     <div className="formBackground">
       <Container className="formContainer">
@@ -75,19 +90,35 @@ export default function TwoLevelFormDrawer(props) {
         <Row className="bottomFormRow">
           <Col xs={1}></Col>
           <Col xs={2}>
-            <Button onClick={decreaseCounter}>Previous</Button>
+            <Button
+              onClick={decreaseCounter}
+              disabled={butVisib(
+                editMode,
+                selectedEntry,
+                entryAmount,
+                "previous"
+              )}
+            >
+              Previous
+            </Button>
           </Col>
           <Col xs={2}>Entry</Col>
           <Col xs={2}>
             <Form.Control
               type="text"
+              readOnly={editMode}
               value={selectedEntry + 1}
               onChange={handleEntrySelection}
             />
           </Col>
           <Col xs={2}>of {entryAmount}</Col>
           <Col xs={2}>
-            <Button onClick={increaseCounter}>Next</Button>
+            <Button
+              disabled={butVisib(editMode, selectedEntry, entryAmount, "next")}
+              onClick={increaseCounter}
+            >
+              Next
+            </Button>
           </Col>
           <Col xs={1}></Col>
         </Row>

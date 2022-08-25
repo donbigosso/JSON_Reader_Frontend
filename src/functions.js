@@ -101,3 +101,46 @@ export const writeDataToFile = (data, apiUrl, filename) => {
     .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
 };
+
+export const butVisib = (editMode, currentItem, itemCount, buttType) => {
+  if (!editMode) {
+    if (buttType === "previous") {
+      if (currentItem > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (buttType === "next") {
+      if (currentItem < itemCount - 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  } else {
+    return true;
+  }
+};
+
+export const setCookie = (cookieName, cvalue, exDays) => {
+  const d = new Date();
+  d.setTime(d.getTime() + exDays * 24 * 60 * 60 * 1000);
+  let expires = "expires=" + d.toUTCString();
+  document.cookie =
+    cookieName + "=" + cvalue + ";" + expires + ";path=/;SameSite=Lax";
+};
+
+export function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
