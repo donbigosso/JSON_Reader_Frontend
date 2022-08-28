@@ -43,3 +43,8 @@
 .errorSpan {
   color: rgb(87, 16, 16);
 }
+
+.myModal {
+  background-color: #a8b3a4;
+  color: red;
+}

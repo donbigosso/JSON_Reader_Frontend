@@ -3,6 +3,7 @@ import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 import MyModal from "./MyModal";
+import TwoLeVFormNavPane from "./TwoLeVFormNavPane";
 
 import {
   displayLabelName,
@@ -142,6 +143,10 @@ export default function TwoLevelFormDrawer(props) {
           </Col>
           <Col xs={4}></Col>
         </Row>
+        <TwoLeVFormNavPane
+          handleEntrySelection={() => handleEntrySelection()}
+          selectedEntry={selectedEntry}
+        />
         <Row>
           <Col xs={4}></Col>
 
@@ -163,11 +168,12 @@ export default function TwoLevelFormDrawer(props) {
         </Row>
       </Container>
       <MyModal
+        className="myModal"
         header={modalData.header}
         content={modalData.content}
         buttnos={modalData.buttons}
         sucButText={modalData.btnOne}
-        danButText={modalData.btnTwo}
+        donButText={modalData.btnTwo}
         show={modalData.show}
         onHide={() => setModalData({ ...modalData, show: false })}
         modalAction1={modalData.modalAction1}
