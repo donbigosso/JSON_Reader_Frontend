@@ -5,13 +5,7 @@ import FormLabelField from "./FormLabelField";
 import MyModal from "./MyModal";
 import TwoLeVFormNavPane from "./TwoLeVFormNavPane";
 
-import {
-  displayLabelName,
-  writeDataToFile,
-  butVisib,
-  setCookie,
-  getCookie,
-} from "../functions";
+import { displayLabelName, writeDataToFile, getCookie } from "../functions";
 
 export default function TwoLevelFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
@@ -24,7 +18,7 @@ export default function TwoLevelFormDrawer(props) {
   const [errorMessage, setErrorMsg] = useState("");
 
   const [modalData, setModalData] = useState({
-    show: true,
+    show: false,
     buttons: 2,
     header: "Test header",
     content: "Test body",
@@ -57,38 +51,16 @@ export default function TwoLevelFormDrawer(props) {
     ));
   };
 
-  const handleEntrySelection = (event) => {
-    const typedValueIsNumber = Number(event.target.value);
-    if (typedValueIsNumber) {
-      if (typedValueIsNumber > 0 && typedValueIsNumber <= entryAmount) {
-        setSelectedEntry(typedValueIsNumber - 1);
-        setCookie("selectedEntry", typedValueIsNumber - 1, 14);
-      }
-    }
-  };
-
-  const increaseCounter = () => {
-    if (selectedEntry < entryAmount - 1) {
-      const newCounter = selectedEntry + 1;
-      setSelectedEntry(newCounter);
-      setCookie("selectedEntry", newCounter, 14);
-    }
-  };
-
-  const decreaseCounter = () => {
-    if (selectedEntry > 0) {
-      const newCounter = selectedEntry - 1;
-      setSelectedEntry(newCounter);
-      setCookie("selectedEntry", newCounter, 14);
-    }
-  };
-
   useEffect(() => {
     const entryCookie = getCookie("selectedEntry");
     if (entryCookie !== "") {
       setSelectedEntry(Number(entryCookie));
     }
   }, []);
+
+  const setEntryFromInput = (value) => {
+    setSelectedEntry(value);
+  };
   return (
     <div className="formBackground">
       <Container className="formContainer">
@@ -100,41 +72,6 @@ export default function TwoLevelFormDrawer(props) {
           // newFieldDrawer(selectedEntry)
         }
 
-        <Row className="bottomFormRow">
-          <Col xs={1}></Col>
-          <Col xs={2}>
-            <Button
-              onClick={decreaseCounter}
-              disabled={butVisib(
-                editMode,
-                selectedEntry,
-                entryAmount,
-                "previous"
-              )}
-            >
-              Previous
-            </Button>
-          </Col>
-          <Col xs={2}>Entry</Col>
-          <Col xs={2}>
-            <Form.Control
-              type="text"
-              readOnly={editMode}
-              value={selectedEntry + 1}
-              onChange={handleEntrySelection}
-            />
-          </Col>
-          <Col xs={2}>of {entryAmount}</Col>
-          <Col xs={2}>
-            <Button
-              disabled={butVisib(editMode, selectedEntry, entryAmount, "next")}
-              onClick={increaseCounter}
-            >
-              Next
-            </Button>
-          </Col>
-          <Col xs={1}></Col>
-        </Row>
         <Row>
           <Col xs={4}></Col>
 
@@ -144,8 +81,10 @@ export default function TwoLevelFormDrawer(props) {
           <Col xs={4}></Col>
         </Row>
         <TwoLeVFormNavPane
-          handleEntrySelection={() => handleEntrySelection()}
           selectedEntry={selectedEntry}
+          entryAmount={entryAmount}
+          sendDataToParent={setEntryFromInput}
+          editMode={editMode}
         />
         <Row>
           <Col xs={4}></Col>
