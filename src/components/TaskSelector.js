@@ -3,7 +3,7 @@ import axios from "axios";
 import Loader from "./Loader";
 import JsonAssesor from "./JsonAssesor";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ParentFunctionTester from "./ParentFunctionTester";
+import LoginScreen from "./LoginScreen";
 
 export default function TaskSelector(props) {
   const [dataPack, setDataPack] = useState(null);
@@ -59,15 +59,10 @@ export default function TaskSelector(props) {
     if (dataPack) {
       switch (selectedContent) {
         case 0:
-          return (
-            <ParentFunctionTester
-              loadedData={dataPack}
-              parentFunction={() => {
-                getCustomization();
-              }}
-            />
-          );
+          return <Loader />;
         case 1:
+          return <LoginScreen />;
+        case 2:
           return (
             <JsonAssesor
               settings={customSettings}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Button, Container, Form } from "react-bootstrap";
+import { Col, Row, Button, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 import MyModal from "./MyModal";
@@ -9,12 +9,12 @@ import { displayLabelName, writeDataToFile, getCookie } from "../functions";
 
 export default function TwoLevelFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(true);
   const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
-  const [selectedEntry, setSelectedEntry] = useState(5);
-  const [showError, setShowError] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState(1);
+
   const [errorMessage, setErrorMsg] = useState("");
 
   const [modalData, setModalData] = useState({
