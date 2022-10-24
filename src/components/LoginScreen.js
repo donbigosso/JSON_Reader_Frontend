@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
+import axios from "axios";
 export default function LoginScreen(props) {
+  const APIpath = `http://localhost/my/newApi/auth_test.php`; //path to auth api
   const [credentials, setCredentails] = useState(["", ""]);
+  const [message, setMessage] = useState("");
+  const [authRes, setAuthRes] = useState("");
   const handleUsername = (e) => {
     let tempCredentials = [...credentials];
     tempCredentials[0] = e.target.value;
@@ -12,6 +16,21 @@ export default function LoginScreen(props) {
     tempCredentials[1] = e.target.value;
     setCredentails(tempCredentials);
   };
+
+  const sendCredsToAPI = () => {
+    axios
+      .post(APIpath, credentials)
+      .then((res) => {
+        setAuthRes(res.data[0]);
+        if (res.data[0] === false) {
+          setMessage(res.data[1]);
+        } else {
+          setMessage("");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="loaderBg">
       <Container className="formContainer">
@@ -47,7 +66,16 @@ export default function LoginScreen(props) {
         <Row>
           <Col md={4}></Col>
           <Col md={4}>
-            <Button className="topMargin1em">Log in</Button>
+            <span className="errorText">{message}</span>
+          </Col>
+          <Col md={4}></Col>
+        </Row>
+        <Row>
+          <Col md={4}></Col>
+          <Col md={4}>
+            <Button className="topMargin1em" onClick={sendCredsToAPI}>
+              Log in
+            </Button>
           </Col>
           <Col md={4}></Col>
         </Row>
