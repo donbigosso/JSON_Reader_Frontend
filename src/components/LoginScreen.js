@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import axios from "axios";
-export default function LoginScreen(props) {
+export default function LoginScreen({ sendAuthConfirm, ...props }) {
   const APIpath = `http://localhost/my/newApi/auth_test.php`; //path to auth api
   const [credentials, setCredentails] = useState(["", ""]);
   const [message, setMessage] = useState("");
@@ -23,13 +23,19 @@ export default function LoginScreen(props) {
       .then((res) => {
         setAuthRes(res.data[0]);
         if (res.data[0] === false) {
-          setMessage(res.data[1]);
+          setMessage(res.data[1]); //if auth response is negative (false) showiin the error message (1. element of response)
         } else {
           setMessage("");
         }
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    if (authRes === true) {
+      sendAuthConfirm();
+    }
+  }, [authRes]);
 
   return (
     <div className="loaderBg">

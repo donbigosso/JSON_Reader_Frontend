@@ -67,3 +67,8 @@
 .errorText {
   color: rgb(104, 0, 0);
 }
+
+.centerConternt {
+  align-items: center;
+  justify-content: center;
+}

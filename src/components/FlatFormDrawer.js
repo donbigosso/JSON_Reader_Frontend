@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
+import FlatFormNavPane from "./FlatFormNavPane";
 
 import { displayLabelName, writeDataToFile } from "../functions";
 
@@ -42,6 +43,7 @@ export default function FlatFormDrawer(props) {
         </h2>
 
         {drawFormFields()}
+        <FlatFormNavPane />
       </Container>
     </div>
   );

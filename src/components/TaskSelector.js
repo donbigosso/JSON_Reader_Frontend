@@ -61,7 +61,7 @@ export default function TaskSelector(props) {
         case 0:
           return <Loader />;
         case 1:
-          return <LoginScreen />;
+          return <LoginScreen sendAuthConfirm={() => selectContent(2)} />;
         case 2:
           return (
             <JsonAssesor
