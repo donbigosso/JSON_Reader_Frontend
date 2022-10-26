@@ -8,7 +8,7 @@ import { displayLabelName, writeDataToFile } from "../functions";
 
 export default function FlatFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(true);
   const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
@@ -19,6 +19,13 @@ export default function FlatFormDrawer(props) {
     setChildData(tempChildData);
   };
 
+  const turnOnEdit = () => {
+    setEditMode(true);
+  };
+
+  const turnOffEdit = () => {
+    setEditMode(false);
+  };
   const formKeys = Object.keys(dataPack);
   //console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
   const drawFormFields = () => {
@@ -43,7 +50,11 @@ export default function FlatFormDrawer(props) {
         </h2>
 
         {drawFormFields()}
-        <FlatFormNavPane />
+        <FlatFormNavPane
+          editMode={editMode}
+          turnOffEdit={turnOffEdit}
+          turnOnEdit={turnOnEdit}
+        />
       </Container>
     </div>
   );
