@@ -8,10 +8,11 @@ import { displayLabelName, writeDataToFile } from "../functions";
 
 export default function FlatFormDrawer(props) {
   const [dataPack, setDataPack] = useState(props.loadedData);
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
+  const [tempData, setTempData] = useState("");
 
   const updateChildDataArray = (data, key) => {
     const tempChildData = { ...childData };
@@ -21,10 +22,18 @@ export default function FlatFormDrawer(props) {
 
   const turnOnEdit = () => {
     setEditMode(true);
+    setTempData(dataPack);
   };
 
-  const turnOffEdit = () => {
-    setEditMode(false);
+  const turnOffEdit = (reason) => {
+    if (tempData !== "" && reason === "cancel") {
+      setChildData(dataPack);
+      setEditMode(false);
+    }
+    if (reason === "save") {
+      setEditMode(false);
+      console.log(dataPack);
+    }
   };
   const formKeys = Object.keys(dataPack);
   //console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------

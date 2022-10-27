@@ -22,6 +22,8 @@ export default function FormControlField({ sendDataToParent, ...props }) {
     setFormValue(props.value);
   }, [props.value]);
 
+  useEffect(() => setEditMode(props.editMode), [props.editMode]);
+
   const drawTextArea = (value) => {
     const len = value.length;
     return len < 80 ? (

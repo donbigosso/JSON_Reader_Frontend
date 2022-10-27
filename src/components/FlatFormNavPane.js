@@ -8,25 +8,35 @@ export default function FlatFormNavPane({
 }) {
   // const editMode = props.editMode;
   const [editMode, setEditMode] = useState(props.editMode);
-  const editSaveButVar = () => {
-    return editMode ? "success" : "primary";
-  };
 
   useEffect(() => {
     setEditMode(props.editMode);
   }, [props.editMode]);
+
+  const editSaveButtonFunc = () => {
+    if (editMode) {
+      turnOffEdit("save");
+    } else {
+      turnOnEdit();
+    }
+  };
   return (
     <Row className="bottomFormRow centerConternt">
       <Col md={4}></Col>
       <Col md={4}>
-        <Button variant={editSaveButVar()} onClick={turnOnEdit}>
+        <Button
+          variant={editMode ? "success" : "primary"}
+          onClick={editSaveButtonFunc}
+        >
           {editMode ? "Save" : "Edit"}
         </Button>
         {editMode ? (
           <Button
             variant="danger"
             className="margLeft1em"
-            onClick={turnOffEdit}
+            onClick={() => {
+              turnOffEdit("cancel");
+            }}
           >
             Cancel
           </Button>
