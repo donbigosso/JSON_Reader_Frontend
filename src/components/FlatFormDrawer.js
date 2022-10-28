@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Col, Container } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button, Row, Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 import FlatFormNavPane from "./FlatFormNavPane";
@@ -32,7 +32,8 @@ export default function FlatFormDrawer(props) {
     }
     if (reason === "save") {
       setEditMode(false);
-      console.log(dataPack);
+
+      setDataPack(childData);
     }
   };
   const formKeys = Object.keys(dataPack);
@@ -50,7 +51,15 @@ export default function FlatFormDrawer(props) {
       </div>
     ));
   };
+  const testFunction = () => {
+    console.log(
+      "Data pack: " + dataPack.lng_ger + " child data: " + childData.lng_ger
+    );
+  };
 
+  const formReset = () => {
+    console.log("Form reset...");
+  };
   return (
     <div className="formBackground">
       <Container className="formContainer">
@@ -64,6 +73,9 @@ export default function FlatFormDrawer(props) {
           turnOffEdit={turnOffEdit}
           turnOnEdit={turnOnEdit}
         />
+        <Row>
+          <Button onClick={testFunction}>Test</Button>
+        </Row>
       </Container>
     </div>
   );

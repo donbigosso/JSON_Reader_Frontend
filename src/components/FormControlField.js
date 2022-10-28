@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { checkPlaceholder, checkInputType } from "../functions";
 import { Form, FormControl } from "react-bootstrap";
 
-export default function FormControlField({ sendDataToParent, ...props }) {
+export default function FormControlField({
+  sendDataToParent,
+
+  ...props
+}) {
   //const createAFormControlField = (element, index)
   const [formValue, setFormValue] = useState(props.value);
   const [editMode, setEditMode] = useState(props.editMode);
@@ -21,6 +25,10 @@ export default function FormControlField({ sendDataToParent, ...props }) {
   useEffect(() => {
     setFormValue(props.value);
   }, [props.value]);
+
+  useEffect(() => {
+    setFormValue(props.value);
+  }, [props.editMode]);
 
   useEffect(() => setEditMode(props.editMode), [props.editMode]);
 
