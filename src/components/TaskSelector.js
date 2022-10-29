@@ -4,8 +4,17 @@ import Loader from "./Loader";
 import JsonAssesor from "./JsonAssesor";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginScreen from "./LoginScreen";
+import { getCookie } from "../functions";
 
 export default function TaskSelector(props) {
+  useEffect(() => {
+    const entryCookie = getCookie("saaaelectedEntry");
+    if (entryCookie !== "") {
+      console.log("Is cookie");
+    } else {
+      console.log("No cookie");
+    }
+  }, []);
   const [dataPack, setDataPack] = useState(null);
   const [selectedContent, selectContent] = useState(1);
 
@@ -70,6 +79,7 @@ export default function TaskSelector(props) {
               parentFunction={() => {
                 getDataPack();
               }}
+              logOut={() => selectContent(1)}
             />
           );
       }

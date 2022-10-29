@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Button, Container, Form } from "react-bootstrap";
+import { setCookie } from "../functions";
 import axios from "axios";
 export default function LoginScreen({ sendAuthConfirm, ...props }) {
   const APIpath = `http://localhost/my/newApi/auth_test.php`; //path to auth api
@@ -33,6 +34,8 @@ export default function LoginScreen({ sendAuthConfirm, ...props }) {
 
   useEffect(() => {
     if (authRes === true) {
+      setCookie("loggedUser", credentials[0], 0.004);
+      setCookie("loggedStatus", 1, 0.004);
       sendAuthConfirm();
     }
   }, [authRes]);

@@ -6,7 +6,8 @@ import FlatFormNavPane from "./FlatFormNavPane";
 
 import { displayLabelName, writeDataToFile } from "../functions";
 
-export default function FlatFormDrawer(props) {
+// AiOutlineLogout
+export default function FlatFormDrawer({ logOut, ...props }) {
   const [dataPack, setDataPack] = useState(props.loadedData);
   const [editMode, setEditMode] = useState(false);
   const [childData, setChildData] = useState(props.loadedData);
@@ -34,8 +35,14 @@ export default function FlatFormDrawer(props) {
       setEditMode(false);
 
       setDataPack(childData);
+      writeDataToFile(
+        childData,
+        props.settings.settings.apiPath,
+        props.settings.settings.jsonFilename
+      );
     }
   };
+
   const formKeys = Object.keys(dataPack);
   //console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
   const drawFormFields = () => {
@@ -51,31 +58,29 @@ export default function FlatFormDrawer(props) {
       </div>
     ));
   };
-  const testFunction = () => {
-    console.log(
-      "Data pack: " + dataPack.lng_ger + " child data: " + childData.lng_ger
-    );
-  };
 
-  const formReset = () => {
-    console.log("Form reset...");
-  };
   return (
     <div className="formBackground">
       <Container className="formContainer">
-        <h2 className="formHeader">
-          {displayLabelName("conscious_pl_PL.json", fileNames)}
-        </h2>
-
+        <Row>
+          <Col sm={10}></Col>
+          <Col sm={2}>
+            <div className="logOutDiv" onClick={logOut}>
+              Log out &#8594;
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <h2 className="formHeader">
+            {displayLabelName("conscious_pl_PL.json", fileNames)}
+          </h2>
+        </Row>
         {drawFormFields()}
         <FlatFormNavPane
           editMode={editMode}
           turnOffEdit={turnOffEdit}
           turnOnEdit={turnOnEdit}
         />
-        <Row>
-          <Button onClick={testFunction}>Test</Button>
-        </Row>
       </Container>
     </div>
   );

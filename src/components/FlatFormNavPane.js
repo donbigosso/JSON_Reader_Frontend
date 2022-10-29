@@ -21,7 +21,7 @@ export default function FlatFormNavPane({
     }
   };
   return (
-    <Row className="bottomFormRow centerConternt">
+    <Row className="bottomFormRow centerContent">
       <Col md={4}></Col>
       <Col md={4}>
         <Button

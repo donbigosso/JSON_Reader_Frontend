@@ -68,11 +68,29 @@
   color: rgb(104, 0, 0);
 }
 
-.centerConternt {
+.centerContent {
   align-items: center;
   justify-content: center;
 }
 
 .margLeft1em {
   margin-left: 1em;
+}
+
+.alignTextRight {
+  align-items: center;
+  justify-content: right;
+}
+
+.paddingRight1em {
+  padding-right: 1em;
+}
+
+.floatRight {
+  float: right;
+}
+
+.logOutDiv:hover {
+  color: red;
+  cursor: pointer;
 }

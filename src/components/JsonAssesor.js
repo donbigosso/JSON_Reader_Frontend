@@ -9,11 +9,7 @@ import {
   checkObjectDepth,
   drawListItemsAccordingToDepth,
 } from "../functions";
-export default function JsonAssesor({
-  parentFunction,
-
-  ...props
-}) {
+export default function JsonAssesor({ parentFunction, logOut, ...props }) {
   const [dataPack, setDataPack] = useState(props.loadedData);
   const [errors, setErrors] = useState([]);
   const [childData, setChildData] = useState([]);
@@ -32,7 +28,11 @@ export default function JsonAssesor({
       switch (depth) {
         case 1:
           return (
-            <FlatFormDrawer loadedData={dataPack} settings={props.settings} />
+            <FlatFormDrawer
+              loadedData={dataPack}
+              settings={props.settings}
+              logOut={logOut}
+            />
           );
         case 2:
           return (
