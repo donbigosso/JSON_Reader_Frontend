@@ -7,17 +7,20 @@ import LoginScreen from "./LoginScreen";
 import { getCookie } from "../functions";
 
 export default function TaskSelector(props) {
-  useEffect(() => {
-    const entryCookie = getCookie("saaaelectedEntry");
-    if (entryCookie !== "") {
-      console.log("Is cookie");
-    } else {
-      console.log("No cookie");
-    }
-  }, []);
   const [dataPack, setDataPack] = useState(null);
   const [selectedContent, selectContent] = useState(1);
+  useEffect(() => {
+    const userData = [
+      Number(getCookie("loggedStatus")),
+      getCookie("loggedUser"),
+    ];
 
+    if (userData[0] == 1) {
+      //if user is logged in
+      console.log(`Logged user: ${userData[1]}`);
+      selectContent(2);
+    }
+  }, []);
   const [customSettings, setCustomSettings] = useState({
     settings: {
       jsonFilename: "",

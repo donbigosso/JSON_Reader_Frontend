@@ -4,7 +4,7 @@ import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 import FlatFormNavPane from "./FlatFormNavPane";
 
-import { displayLabelName, writeDataToFile } from "../functions";
+import { displayLabelName, writeDataToFile, setCookie } from "../functions";
 
 // AiOutlineLogout
 export default function FlatFormDrawer({ logOut, ...props }) {
@@ -65,7 +65,14 @@ export default function FlatFormDrawer({ logOut, ...props }) {
         <Row>
           <Col sm={10}></Col>
           <Col sm={2}>
-            <div className="logOutDiv" onClick={logOut}>
+            <div
+              className="logOutDiv"
+              onClick={() => {
+                logOut();
+                setCookie("loggedUser", "");
+                setCookie("loggedStatus", "");
+              }}
+            >
               Log out &#8594;
             </div>
           </Col>
