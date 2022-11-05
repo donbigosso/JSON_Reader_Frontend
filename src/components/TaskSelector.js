@@ -9,6 +9,7 @@ import { getCookie } from "../functions";
 
 export default function TaskSelector(props) {
   const [dataPack, setDataPack] = useState(null);
+  const [fileDataPack, setFileDataPack] = useState([]);
   const [selectedContent, selectContent] = useState(1);
   useEffect(() => {
     const userData = [
@@ -24,13 +25,13 @@ export default function TaskSelector(props) {
   }, []);
   const [customSettings, setCustomSettings] = useState({
     settings: {
-      jsonFilename: "",
+      PLContent: "",
     },
   });
   const noCache = Math.round(Date.now() / 100);
   //const settingsFile = `${process.env.PUBLIC_URL}/data/test_settings.json?noCache=${noCache}`;
-  //const settingsFile = `http://localhost/my/newApi/test_settings.json?noCache=${noCache}`;
-  const settingsFile = `http://consciouswood.com/API/test_settings.json?noCache=${noCache}`;
+  const settingsFile = `http://localhost/my/newApi/conscious_settings.json?noCache=${noCache}`;
+  //const settingsFile = `http://consciouswood.com/API/test_settings.json?noCache=${noCache}`;
   const getCustomization = () => {
     axios
       .get(settingsFile)
@@ -48,10 +49,16 @@ export default function TaskSelector(props) {
   }, []);
 
   const jsonFolderPath = customSettings.settings.jsonPath;
-  const fileName = customSettings.settings.jsonFilename;
-  const url = `${jsonFolderPath + fileName}?noCache=${noCache}`;
-  const getDataPack = () => {
-    if (customSettings.settings.jsonFilename !== "") {
+  const plFile = customSettings.settings.PLContent;
+  const enFile = customSettings.settings.ENContent;
+  const deFile = customSettings.settings.DEContent;
+  const imageFile = customSettings.settings.images;
+  const PLurl = `${jsonFolderPath + plFile}?noCache=${noCache}`;
+  const ENurl = `${jsonFolderPath + enFile}?noCache=${noCache}`;
+  const DEurl = `${jsonFolderPath + deFile}?noCache=${noCache}`;
+  const imageUrl = `${jsonFolderPath + imageFile}?noCache=${noCache}`;
+  const getDataPack = (url) => {
+    if (customSettings.settings.PLContent !== "") {
       axios
         .get(url)
         .then((res) => {
@@ -63,13 +70,43 @@ export default function TaskSelector(props) {
         });
     }
   };
-  useEffect(() => {
-    getDataPack();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getFileDataPack = (url, index) => {
+    if (customSettings.settings.PLContent !== "") {
+      axios
+        .get(url)
+        .then((res) => {
+          const imported = res.data;
+          let tempFileDataPack = [...fileDataPack];
+          tempFileDataPack[index] = imported;
+          setFileDataPack(tempFileDataPack);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    getDataPack(PLurl);
+    getFileDataPack(PLurl, 1);
   }, [customSettings]);
+
+  useEffect(() => {
+    getFileDataPack(ENurl, 2);
+  }, [fileDataPack[1]]);
+
+  useEffect(() => {
+    getFileDataPack(DEurl, 3);
+  }, [fileDataPack[2]]);
+
+  useEffect(() => {
+    getFileDataPack(imageUrl, 4);
+  }, [fileDataPack[3]]);
+
   const displayContent = () => {
-    if (dataPack) {
+    if (fileDataPack[4]) {
+      //waits until all 4 files are loaded
       switch (selectedContent) {
         case 0:
           return <Loader />;
@@ -81,6 +118,7 @@ export default function TaskSelector(props) {
               settings={customSettings}
               loadedData={dataPack}
               logOut={() => selectContent(1)}
+              fileDataPack={fileDataPack}
             />
           );
       }

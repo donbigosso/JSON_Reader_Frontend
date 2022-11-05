@@ -10,12 +10,13 @@ import { displayLabelName, writeDataToFile, setCookie } from "../functions";
 // AiOutlineLogout
 export default function ConsciousWoodForm({ logOut, ...props }) {
   const [dataPack, setDataPack] = useState(props.loadedData);
+  const [fileDataPack, setFileDataPack] = useState(props.fileDataPack);
   const [editMode, setEditMode] = useState(false);
-  const [childData, setChildData] = useState(props.loadedData);
   const labelCaptions = props.settings.labelCaptions;
   const fileNames = props.settings.fileNames;
   const [tempData, setTempData] = useState("");
-
+  const [selectedContent, setSelectedContent] = useState(1);
+  const [childData, setChildData] = useState(fileDataPack[selectedContent]);
   const updateChildDataArray = (data, key) => {
     const tempChildData = { ...childData };
     tempChildData[key] = data;
@@ -24,27 +25,34 @@ export default function ConsciousWoodForm({ logOut, ...props }) {
 
   const turnOnEdit = () => {
     setEditMode(true);
-    setTempData(dataPack);
+    setTempData(fileDataPack[selectedContent]);
   };
+  const fileIDs = ["", "PLContent", "ENContent", "DEContent", "images"];
 
   const turnOffEdit = (reason) => {
     if (tempData !== "" && reason === "cancel") {
-      setChildData(dataPack);
+      setChildData(fileDataPack[selectedContent]);
       setEditMode(false);
     }
     if (reason === "save") {
       setEditMode(false);
 
-      setDataPack(childData);
+      let tempFileDataPack = [...fileDataPack];
+      tempFileDataPack[selectedContent] = childData;
+      setFileDataPack(tempFileDataPack);
       writeDataToFile(
         childData,
         props.settings.settings.apiPath,
-        props.settings.settings.jsonFilename
+        props.settings.settings[fileIDs[selectedContent]]
       );
     }
   };
-
-  const formKeys = Object.keys(dataPack);
+  const returnSelCont = (option) => {
+    //console.log("Option selected: " + option);
+    setSelectedContent(option);
+    setChildData(fileDataPack[option]);
+  };
+  const formKeys = Object.keys(fileDataPack[selectedContent]);
   //console.log(childData); //-------------------------------------CONSOLE LOG! ----------------------------------------------
   const drawFormFields = () => {
     return formKeys.map((element, index) => (
@@ -52,12 +60,16 @@ export default function ConsciousWoodForm({ logOut, ...props }) {
         <FormLabelField value={element} labelCaptions={labelCaptions} />
         <FormControlField
           formInputID={element}
-          value={dataPack[element]}
+          value={fileDataPack[selectedContent][element]}
           editMode={editMode}
           sendDataToParent={updateChildDataArray}
         />
       </div>
     ));
+  };
+
+  const testFunction = () => {
+    console.log(childData);
   };
 
   return (
@@ -83,13 +95,17 @@ export default function ConsciousWoodForm({ logOut, ...props }) {
             {displayLabelName("conscious_pl_PL.json", fileNames)}
           </h2>
         </Row>
-        <ConsciousContentSelector editMode={editMode} />
+        <ConsciousContentSelector
+          editMode={editMode}
+          selectContent={returnSelCont}
+        />
         {drawFormFields()}
         <FlatFormNavPane
           editMode={editMode}
           turnOffEdit={turnOffEdit}
           turnOnEdit={turnOnEdit}
         />
+        <button onClick={testFunction}>test</button>
       </Container>
     </div>
   );
