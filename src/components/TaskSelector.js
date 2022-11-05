@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import JsonAssesor from "./JsonAssesor";
+import ConsciousWoodForm from "./ConsciousWoodForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginScreen from "./LoginScreen";
 import { getCookie } from "../functions";
@@ -76,12 +77,9 @@ export default function TaskSelector(props) {
           return <LoginScreen sendAuthConfirm={() => selectContent(2)} />;
         case 2:
           return (
-            <JsonAssesor
+            <ConsciousWoodForm
               settings={customSettings}
               loadedData={dataPack}
-              parentFunction={() => {
-                getDataPack();
-              }}
               logOut={() => selectContent(1)}
             />
           );

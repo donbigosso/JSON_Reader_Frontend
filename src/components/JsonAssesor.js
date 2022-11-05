@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-
+import ConsciousWoodForm from "./ConsciousWoodForm";
 import FlatFormDrawer from "./FlatFormDrawer";
-import Depth2Main from "./Depth2Main";
+
 import TwoLevelFormDrawer from "./TwoLevelFormDrawer";
-import {
-  verifyIfObject,
-  checkIfObjectsByKeys,
-  checkObjectDepth,
-  drawListItemsAccordingToDepth,
-} from "../functions";
+import { checkObjectDepth } from "../functions";
 export default function JsonAssesor({ parentFunction, logOut, ...props }) {
   const [dataPack, setDataPack] = useState(props.loadedData);
   const [errors, setErrors] = useState([]);
-  const [childData, setChildData] = useState([]);
 
   const myStyle = {
     width: "300px",

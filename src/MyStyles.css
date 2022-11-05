@@ -94,3 +94,7 @@
   color: red;
   cursor: pointer;
 }
+
+.blueColor {
+  color: rgb(0, 0, 102);
+}
