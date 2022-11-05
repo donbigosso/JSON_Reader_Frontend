@@ -28,8 +28,8 @@ export default function TaskSelector(props) {
   });
   const noCache = Math.round(Date.now() / 100);
   //const settingsFile = `${process.env.PUBLIC_URL}/data/test_settings.json?noCache=${noCache}`;
-  const settingsFile = `http://localhost/my/newApi/test_settings.json?noCache=${noCache}`;
-
+  //const settingsFile = `http://localhost/my/newApi/test_settings.json?noCache=${noCache}`;
+  const settingsFile = `http://consciouswood.com/API/test_settings.json?noCache=${noCache}`;
   const getCustomization = () => {
     axios
       .get(settingsFile)

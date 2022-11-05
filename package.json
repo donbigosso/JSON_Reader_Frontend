@@ -1,6 +1,7 @@
 {
   "name": "json_manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "homepage": "http://consciouswood.com/manager",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
