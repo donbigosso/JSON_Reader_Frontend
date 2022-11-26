@@ -9,7 +9,6 @@ import { displayLabelName, writeDataToFile, setCookie } from "../functions";
 
 // AiOutlineLogout
 export default function ConsciousWoodForm({ logOut, ...props }) {
-  const [dataPack, setDataPack] = useState(props.loadedData);
   const [fileDataPack, setFileDataPack] = useState(props.fileDataPack);
   const [editMode, setEditMode] = useState(false);
   const labelCaptions = props.settings.labelCaptions;
@@ -90,22 +89,18 @@ export default function ConsciousWoodForm({ logOut, ...props }) {
             </div>
           </Col>
         </Row>
-        <Row>
-          <h2 className="formHeader">
-            {displayLabelName("conscious_pl_PL.json", fileNames)}
-          </h2>
-        </Row>
+
         <ConsciousContentSelector
           editMode={editMode}
           selectContent={returnSelCont}
         />
+
         {drawFormFields()}
         <FlatFormNavPane
           editMode={editMode}
           turnOffEdit={turnOffEdit}
           turnOnEdit={turnOnEdit}
         />
-        <button onClick={testFunction}>test</button>
       </Container>
     </div>
   );

@@ -40,8 +40,8 @@ export default function ConsciousContentSelector({ selectContent, ...props }) {
         <Col sm={4}></Col>
       </Row>
       <Row>
-        <Col sm={5}></Col>
-        <Col sm={2}>
+        <Col sm={4}></Col>
+        <Col sm={4}>
           <FormControl
             as="select"
             defaultValue={"Page content PL"}
@@ -55,7 +55,7 @@ export default function ConsciousContentSelector({ selectContent, ...props }) {
             <option>{menuOptions[4]}</option>
           </FormControl>
         </Col>
-        <Col sm={5}></Col>
+        <Col sm={4}></Col>
       </Row>
     </>
   );
