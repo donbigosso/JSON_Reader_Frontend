@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import JsonAssesor from "./JsonAssesor";
-import ConsciousWoodForm from "./ConsciousWoodForm";
+import MultipleFlatJSONForm from "./MultipleFlatJSONForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginScreen from "./LoginScreen";
 import { getCookie } from "../functions";
@@ -30,8 +30,8 @@ export default function TaskSelector(props) {
   });
   const noCache = Math.round(Date.now() / 100);
   //const settingsFile = `${process.env.PUBLIC_URL}/data/test_settings.json?noCache=${noCache}`;
-  //const settingsFile = `http://localhost/my/newApi/conscious_settings.json?noCache=${noCache}`;
-  const settingsFile = `http://consciouswood.com/API/conscious_settings.json?noCache=${noCache}`;
+  const settingsFile = `http://localhost/my/newApi/settings.json?noCache=${noCache}`;
+
   const getCustomization = () => {
     axios
       .get(settingsFile)
@@ -114,7 +114,7 @@ export default function TaskSelector(props) {
           return <LoginScreen sendAuthConfirm={() => selectContent(2)} />;
         case 2:
           return (
-            <ConsciousWoodForm
+            <MultipleFlatJSONForm
               settings={customSettings}
               loadedData={dataPack}
               logOut={() => selectContent(1)}

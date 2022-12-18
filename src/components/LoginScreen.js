@@ -3,7 +3,7 @@ import { Col, Row, Button, Container, Form } from "react-bootstrap";
 import { setCookie } from "../functions";
 import axios from "axios";
 export default function LoginScreen({ sendAuthConfirm, ...props }) {
-  const APIpath = `http://consciouswood.com/API/authenticator.php`; //path to auth api
+  const APIpath = `http://localhost/my/newApi/authenticator.php`; //path to auth api
   const [credentials, setCredentails] = useState(["", ""]);
   const [message, setMessage] = useState("");
   const [authRes, setAuthRes] = useState("");

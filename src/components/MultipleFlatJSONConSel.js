@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
-export default function ConsciousContentSelector({ selectContent, ...props }) {
+export default function MultipleFlatJSONConSel({ selectContent, ...props }) {
   const [selectedOption, setSelectedOption] = useState(1); // 1-content PL 2-content en 3-content DE 4-images 5-settings
   const menuOptions = [
     "blank",

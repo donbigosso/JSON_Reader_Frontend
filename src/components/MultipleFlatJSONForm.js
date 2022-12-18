@@ -3,12 +3,12 @@ import { Button, Row, Col, Container } from "react-bootstrap";
 import FormControlField from "./FormControlField";
 import FormLabelField from "./FormLabelField";
 import FlatFormNavPane from "./FlatFormNavPane";
-import ConsciousContentSelector from "./ConsciousContentSelector";
+import MultipleFlatJSONConSel from "./MultipleFlatJSONConSel";
 
 import { displayLabelName, writeDataToFile, setCookie } from "../functions";
 
 // AiOutlineLogout
-export default function ConsciousWoodForm({ logOut, ...props }) {
+export default function MultipleFlatJSONForm({ logOut, ...props }) {
   const [fileDataPack, setFileDataPack] = useState(props.fileDataPack);
   const [editMode, setEditMode] = useState(false);
   const labelCaptions = props.settings.labelCaptions;
@@ -90,7 +90,7 @@ export default function ConsciousWoodForm({ logOut, ...props }) {
           </Col>
         </Row>
 
-        <ConsciousContentSelector
+        <MultipleFlatJSONConSel
           editMode={editMode}
           selectContent={returnSelCont}
         />
