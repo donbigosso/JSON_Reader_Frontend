@@ -26,7 +26,13 @@ export default function MultipleFlatJSONForm({ logOut, ...props }) {
     setEditMode(true);
     setTempData(fileDataPack[selectedContent]);
   };
-  const fileIDs = ["", "PLContent", "ENContent", "DEContent", "images"];
+  const fileIDs = [
+    "",
+    "flat_content_01",
+    "flat_content_02",
+    "flat_content_03",
+    "images",
+  ];
 
   const turnOffEdit = (reason) => {
     if (tempData !== "" && reason === "cancel") {

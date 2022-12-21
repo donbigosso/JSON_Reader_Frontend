@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 export default function MultipleFlatJSONConSel({ selectContent, ...props }) {
   const [selectedOption, setSelectedOption] = useState(1); // 1-content PL 2-content en 3-content DE 4-images 5-settings
-  const menuOptions = [
-    "blank",
-    "Page content PL",
-    "Page content EN",
-    "Page content DE",
-    "Images",
-  ];
+  const menuOptions = ["blank", "File 01", "File 02", "File 03", "Images"];
   const handleChange = (event) => {
     const selectedFormOption = event.target.value;
     switch (selectedFormOption) {
@@ -44,7 +38,7 @@ export default function MultipleFlatJSONConSel({ selectContent, ...props }) {
         <Col sm={4}>
           <FormControl
             as="select"
-            defaultValue={"Page content PL"}
+            defaultValue={"File 01"}
             className="formField topMargin1em"
             disabled={props.editMode}
             onChange={handleChange}

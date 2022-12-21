@@ -25,7 +25,7 @@ export default function TaskSelector(props) {
   }, []);
   const [customSettings, setCustomSettings] = useState({
     settings: {
-      PLContent: "",
+      flat_content_01: "",
     },
   });
   const noCache = Math.round(Date.now() / 100);
@@ -49,16 +49,16 @@ export default function TaskSelector(props) {
   }, []);
 
   const jsonFolderPath = customSettings.settings.jsonPath;
-  const plFile = customSettings.settings.PLContent;
-  const enFile = customSettings.settings.ENContent;
-  const deFile = customSettings.settings.DEContent;
+  const plFile = customSettings.settings.flat_content_01;
+  const enFile = customSettings.settings.flat_content_02;
+  const deFile = customSettings.settings.flat_content_03;
   const imageFile = customSettings.settings.images;
   const PLurl = `${jsonFolderPath + plFile}?noCache=${noCache}`;
   const ENurl = `${jsonFolderPath + enFile}?noCache=${noCache}`;
   const DEurl = `${jsonFolderPath + deFile}?noCache=${noCache}`;
   const imageUrl = `${jsonFolderPath + imageFile}?noCache=${noCache}`;
   const getDataPack = (url) => {
-    if (customSettings.settings.PLContent !== "") {
+    if (customSettings.settings.flat_content_01 !== "") {
       axios
         .get(url)
         .then((res) => {
@@ -72,7 +72,7 @@ export default function TaskSelector(props) {
   };
 
   const getFileDataPack = (url, index) => {
-    if (customSettings.settings.PLContent !== "") {
+    if (customSettings.settings.flat_content_01 !== "") {
       axios
         .get(url)
         .then((res) => {
