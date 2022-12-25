@@ -49,13 +49,13 @@ export default function TaskSelector(props) {
   }, []);
 
   const jsonFolderPath = customSettings.settings.jsonPath;
-  const plFile = customSettings.settings.flat_content_01;
-  const enFile = customSettings.settings.flat_content_02;
-  const deFile = customSettings.settings.flat_content_03;
+  const file01 = customSettings.settings.flat_content_01;
+  const file02 = customSettings.settings.flat_content_02;
+  const file03 = customSettings.settings.flat_content_03;
   const imageFile = customSettings.settings.images;
-  const PLurl = `${jsonFolderPath + plFile}?noCache=${noCache}`;
-  const ENurl = `${jsonFolderPath + enFile}?noCache=${noCache}`;
-  const DEurl = `${jsonFolderPath + deFile}?noCache=${noCache}`;
+  const content01url = `${jsonFolderPath + file01}?noCache=${noCache}`;
+  const content02url = `${jsonFolderPath + file02}?noCache=${noCache}`;
+  const content03url = `${jsonFolderPath + file03}?noCache=${noCache}`;
   const imageUrl = `${jsonFolderPath + imageFile}?noCache=${noCache}`;
   const getDataPack = (url) => {
     if (customSettings.settings.flat_content_01 !== "") {
@@ -88,16 +88,16 @@ export default function TaskSelector(props) {
   };
 
   useEffect(() => {
-    getDataPack(PLurl);
-    getFileDataPack(PLurl, 1);
+    getDataPack(content01url);
+    getFileDataPack(content01url, 1);
   }, [customSettings]);
 
   useEffect(() => {
-    getFileDataPack(ENurl, 2);
+    getFileDataPack(content02url, 2);
   }, [fileDataPack[1]]);
 
   useEffect(() => {
-    getFileDataPack(DEurl, 3);
+    getFileDataPack(content03url, 3);
   }, [fileDataPack[2]]);
 
   useEffect(() => {
