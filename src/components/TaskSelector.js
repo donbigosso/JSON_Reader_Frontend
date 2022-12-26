@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import JsonAssesor from "./JsonAssesor";
+import FileUploader from "./FileUploader";
 import MultipleFlatJSONForm from "./MultipleFlatJSONForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginScreen from "./LoginScreen";
@@ -20,7 +21,7 @@ export default function TaskSelector(props) {
     if (userData[0] == 1) {
       //if user is logged in
       console.log(`Logged user: ${userData[1]}`);
-      selectContent(2);
+      selectContent(4); // toDo - set a cookie fir a type of page, now is manual
     }
   }, []);
   const [customSettings, setCustomSettings] = useState({
@@ -111,7 +112,7 @@ export default function TaskSelector(props) {
         case 0:
           return <Loader />;
         case 1:
-          return <LoginScreen sendAuthConfirm={() => selectContent(2)} />;
+          return <LoginScreen sendAuthConfirm={() => selectContent(4)} />; //here too choosse what should be loaded after succesful login
         case 2:
           return (
             <MultipleFlatJSONForm
@@ -121,6 +122,21 @@ export default function TaskSelector(props) {
               fileDataPack={fileDataPack}
             />
           );
+
+        case 3:
+          return (
+            <JsonAssesor
+              settings={customSettings}
+              loadedData={dataPack}
+              parentFunction={() => {
+                getDataPack();
+              }}
+              logOut={() => selectContent(1)}
+            />
+          );
+
+        case 4:
+          return <FileUploader logOut={() => selectContent(1)} />;
       }
     } else {
       return <Loader />;
